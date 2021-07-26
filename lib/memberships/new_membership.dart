@@ -18,57 +18,64 @@ class _NewMembershipState extends State<NewMembership> {
             crossAxisCount: 2,
             children: List.generate(
               memberships.length,
-              (index) => GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => MemberShipScreen(
-                        id: memberships[index]["id"],
-                        title: memberships[index]["title"],
-                        price: memberships[index]["price"],
-                        image: memberships[index]["image"],
-                      ),
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Container(
-                    height: 150.0,
-                    width: 150.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.blueGrey.shade200,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Container(
-                          height: 100.0,
-                          width: 100.0,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                image: AssetImage(memberships[index]["image"]),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          "${memberships[index]["title"]}",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+              (index) => Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: PhysicalModel(
+                  color: Colors.white,
+                  elevation: 2,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MemberShipScreen(
+                            id: memberships[index]["id"],
+                            title: memberships[index]["title"],
+                            price: memberships[index]["price"],
+                            image: memberships[index]["image"],
                           ),
                         ),
-                      ],
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        height: 150.0,
+                        width: 150.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Container(
+                              height: 100.0,
+                              width: 100.0,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: AssetImage(memberships[index]["image"]),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              "${memberships[index]["title"]}",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
