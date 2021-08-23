@@ -11,6 +11,13 @@ class _NewMembershipState extends State<NewMembership> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Yeni Üyelik",
+        ),
+        toolbarHeight: 45.0,
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -59,7 +66,8 @@ class _NewMembershipState extends State<NewMembership> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
                                   image: DecorationImage(
-                                    image: AssetImage(memberships[index]["image"]),
+                                    image:
+                                        AssetImage(memberships[index]["image"]),
                                   )),
                             ),
                             SizedBox(

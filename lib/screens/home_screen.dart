@@ -27,11 +27,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: <Widget>[
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 25.0),
-                            child: PhysicalModel(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Card(
                               elevation: 2,
                               color: Colors.blueGrey.shade500,
-                              borderRadius: BorderRadius.circular(10.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
                               child: Container(
                                 height: 175.0,
                                 decoration: BoxDecoration(
@@ -160,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   size: 35.0,
                                 ),
                                 Text(
-                                  "Yeni Ödeme Ekle",
+                                  "Yeni Üyelik",
                                   style: TextStyle(
                                     fontSize: 25.0,
                                     color: Colors.white,
@@ -213,7 +215,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             ["image"]),
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(10.0),
+                                                      BorderRadius.circular(
+                                                          10.0),
                                                   color: Colors.white,
                                                 ),
                                                 height: 100.0,
@@ -227,37 +230,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment.start,
                                               children: <Widget>[
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 10.0, top: 10.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0,
+                                                          top: 10.0),
                                                   child: Text(
                                                     memberships[index]["title"],
                                                     style: TextStyle(
                                                       fontSize: 20.0,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.blueGrey,
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 10.0, top: 10.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0,
+                                                          top: 10.0),
                                                   child: Text(
                                                     "${DateFormat.yMd().format(memberships[index]["date"])}",
                                                     style: TextStyle(
                                                       fontSize: 15.0,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.blueGrey,
                                                     ),
                                                   ),
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 10.0, top: 10.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0,
+                                                          top: 10.0),
                                                   child: Text(
                                                     "${memberships[index]["price"].toStringAsFixed(2)} TL",
                                                     style: TextStyle(
                                                       fontSize: 15.0,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: Colors.blueGrey,
                                                     ),
                                                   ),
@@ -283,7 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MaterialPageRoute(
                                                   builder: (_) =>
                                                       MembershipDetails(
-                                                    id: memberships[index]["id"],
+                                                    id: memberships[index]
+                                                        ["id"],
                                                     title: memberships[index]
                                                         ["title"],
                                                     price: memberships[index]
