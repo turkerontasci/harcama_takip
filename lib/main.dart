@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Harcama Takip',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.grey,
       ),
       home: MyHomePage(),
     );
@@ -43,9 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Harcama Takip"),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
@@ -69,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
               backgroundColor: Colors.white),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blueGrey,
+        selectedItemColor: Colors.grey.shade700,
         onTap: _onItemTapped,
       ),
       body: _widgetOptions[_selectedIndex],

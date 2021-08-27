@@ -1,70 +1,14 @@
-import 'package:flutter/material.dart';
-
-class SelectedMemberShips {
-  int id;
-  String title;
-  double price;
-  String image;
-  int categoryID;
-  String category;
-  DateTime date;
-
-  SelectedMemberShips({
-    this.id,
-    this.title,
-    this.price,
-    this.image,
-    this.date,
-    this.categoryID,
-    this.category,
-  });
-}
-
-List expenses = [
-  {
-    "id": 1,
-    "title": "Yemek",
-    "iconData": Icons.fastfood,
-  },
-  {
-    "id": 2,
-    "title": "Fatura",
-    "iconData": Icons.payments,
-  },
-  {
-    "id": 3,
-    "title": "Mutfak",
-    "iconData": Icons.kitchen,
-  },
-  {
-    "id": 4,
-    "title": "Eğlence",
-    "iconData": Icons.movie_filter_outlined,
-  },
-  {
-    "id": 5,
-    "title": "Giyim",
-    "iconData": Icons.dry_cleaning,
-  },
-  {
-    "id": 6,
-    "title": "Elektronik",
-    "iconData": Icons.laptop_windows,
-  },
-  {
-    "id": 7,
-    "title": "Ulaşım",
-    "iconData": Icons.train,
-  }
-
-];
-
-List memberships = [
+List ownedMemberships = [
   {
     "id": 1,
     "title": "Spotify Premium",
     "price": 39.90,
     "image": "images/spotifylogo.png",
+    "date": DateTime(
+      2021,
+      7,
+      22,
+    ),
     "category": "Music",
     "categoryID": 1,
   },
@@ -73,6 +17,11 @@ List memberships = [
     "title": "Netflix",
     "price": 39.90,
     "image": "images/netflixlogo.png",
+    "date": DateTime(
+      2021,
+      7,
+      23,
+    ),
     "category": "Movie & Show",
     "categoryID": 2,
   },
@@ -81,6 +30,11 @@ List memberships = [
     "title": "Disney+",
     "price": 14.90,
     "image": "images/disneypluslogo.jpeg",
+    "date": DateTime(
+      2021,
+      7,
+      26,
+    ),
     "category": "Movie & Show",
     "categoryID": 2,
   },
@@ -89,6 +43,11 @@ List memberships = [
     "title": "Prime Video",
     "price": 8.90,
     "image": "images/amazonprimelogo.jpeg",
+    "date": DateTime(
+      2021,
+      7,
+      31,
+    ),
     "category": "Movie & Show",
     "categoryID": 2,
   },
@@ -97,6 +56,11 @@ List memberships = [
     "title": "Twitch Sub",
     "price": 9.90,
     "image": "images/twitchlogo.jpeg",
+    "date": DateTime(
+      2021,
+      8,
+      13,
+    ),
     "category": "Streaming",
     "categoryID": 3,
   },
@@ -105,6 +69,11 @@ List memberships = [
     "title": "XBOX Game Pass",
     "price": 9.90,
     "image": "images/xboxlogo.png",
+    "date": DateTime(
+      2021,
+      8,
+      12,
+    ),
     "category": "Game",
     "categoryID": 4,
   },
@@ -113,6 +82,11 @@ List memberships = [
     "title": "PlayStation",
     "price": 9.90,
     "image": "images/psnlogo.png",
+    "date": DateTime(
+      2021,
+      8,
+      12,
+    ),
     "category": "Game",
     "categoryID": 4,
   },
@@ -121,6 +95,11 @@ List memberships = [
     "title": "Apple Music",
     "price": 9.90,
     "image": "images/applemusiclogo.png",
+    "date": DateTime(
+      2021,
+      8,
+      12,
+    ),
     "category": "Music",
     "categoryID": 1,
   },
@@ -129,6 +108,11 @@ List memberships = [
     "title": "Deezer Premium",
     "price": 9.90,
     "image": "images/deezerlogo.png",
+    "date": DateTime(
+      2021,
+      8,
+      12,
+    ),
     "category": "Music",
     "categoryID": 1,
   }
