@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Harcama Takip',
       theme: ThemeData(
         primarySwatch: Colors.grey,
-        scaffoldBackgroundColor: Colors.grey.shade100,
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: MyHomePage(),
     );

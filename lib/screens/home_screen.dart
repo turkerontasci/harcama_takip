@@ -16,7 +16,6 @@ List<Expenses> expenseList = [];
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _textFieldController = TextEditingController();
 
-
   Future<void> _displayTextInputDialog(BuildContext context) async {
     return showDialog(
       context: context,
@@ -31,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: <Widget>[
             TextButton(
               child: Text(
-                  'İPTAL',
-                  style: TextStyle(
+                'İPTAL',
+                style: TextStyle(
                   color: Colors.black,
                 ),
               ),
@@ -42,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               child: Text(
-                  'TAMAM',
+                'TAMAM',
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -87,50 +86,62 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Container(
-                    height: 250.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                    ),
-                    child: (expenseList.isEmpty)
-                      ? Center(child: Text("Günlük Harcama Girişi Yapmadınız"),)
-                        : Row(
+                Material(
+                  borderRadius: BorderRadius.circular(10.0),
+                  elevation: 1.0,
+                  child: (expenseList.isEmpty)
+                      ? Container()
+                      : Container(
+                          height: 250.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: Row(
                             children: <Widget>[
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: SingleChildScrollView(
                                     child: Column(
-                                        children: List.generate(expenseList.length, (index) => Padding(
-                                          padding: const EdgeInsets.only(bottom: 10.0),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              color: Colors.grey.shade100,
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Icon(
-                                                    expenseList[index].iconData,
-                                                    size: 15.0,
+                                        children: List.generate(
+                                            expenseList.length,
+                                            (index) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 10.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color:
+                                                          Colors.grey.shade100,
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              10.0),
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            expenseList[index]
+                                                                .iconData,
+                                                            size: 15.0,
+                                                          ),
+                                                          SizedBox(width: 5.0),
+                                                          Text(
+                                                            "${expenseList[index].type}",
+                                                          ),
+                                                          SizedBox(width: 5.0),
+                                                          Text(
+                                                            "${(expenseList[index].price).toStringAsFixed(2)} TL",
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
                                                   ),
-                                                  SizedBox(width: 5.0),
-                                                  Text(
-                                                    "${expenseList[index].type}",
-                                                  ),
-                                                  SizedBox(width: 5.0),
-                                                  Text(
-                                                    "${(expenseList[index].price).toStringAsFixed(2)} TL",
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ))
-                                    ),
+                                                ))),
                                   ),
                                 ),
                               ),
@@ -141,91 +152,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: SfCircularChart(
                                     legend: Legend(
                                       isVisible: true,
-                                      overflowMode: LegendItemOverflowMode.scroll,
+                                      overflowMode:
+                                          LegendItemOverflowMode.scroll,
                                     ),
                                     series: <CircularSeries>[
                                       PieSeries<Expenses, String>(
                                         dataSource: expenseList,
-                                        xValueMapper: (Expenses data,_) => data.type,
-                                        yValueMapper: (Expenses data,_) => data.price,
-                                        dataLabelSettings: DataLabelSettings(isVisible: true),
+                                        xValueMapper: (Expenses data, _) =>
+                                            data.type,
+                                        yValueMapper: (Expenses data, _) =>
+                                            data.price,
+                                        dataLabelSettings:
+                                            DataLabelSettings(isVisible: true),
                                         enableTooltip: true,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                    )
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 250.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            children: <Widget>[
-                              CarouselSlider(
-                                options: CarouselOptions(
-                                  height: 230.0,
-                                  aspectRatio: 2.0,
-                                  viewportFraction: 1,
-                                  initialPage: 0,
-                                  enableInfiniteScroll: true,
-                                  reverse: false,
-                                  autoPlay: true,
-                                  autoPlayInterval: Duration(seconds: 3),
-                                  autoPlayAnimationDuration:
-                                      Duration(milliseconds: 800),
-                                  autoPlayCurve: Curves.fastOutSlowIn,
-                                  enlargeCenterPage: false,
-                                  scrollDirection: Axis.horizontal,
-                                ),
-                                items: List.generate(
-                                  memberships.length,
-                                  (index) => Column(
-                                    children: <Widget>[
-                                      Container(
-                                        height: 150.0,
-                                        width: 150.0,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                memberships[index]["image"]),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Text(
-                                        "${memberships[index]["title"]}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18.0,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Text(
-                                        "${memberships[index]["price"].toStringAsFixed(2)} TL",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0,
-                                        ),
                                       ),
                                     ],
                                   ),
@@ -234,60 +173,145 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Material(
+                        elevation: 1.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Container(
+                          height: 250.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              children: <Widget>[
+                                CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: 230.0,
+                                    aspectRatio: 2.0,
+                                    viewportFraction: 1,
+                                    initialPage: 0,
+                                    enableInfiniteScroll: true,
+                                    reverse: false,
+                                    autoPlay: true,
+                                    autoPlayInterval: Duration(seconds: 3),
+                                    autoPlayAnimationDuration:
+                                        Duration(milliseconds: 800),
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    enlargeCenterPage: false,
+                                    scrollDirection: Axis.horizontal,
+                                  ),
+                                  items: List.generate(
+                                    memberships.length,
+                                    (index) => Column(
+                                      children: <Widget>[
+                                        Container(
+                                          height: 150.0,
+                                          width: 150.0,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  memberships[index]["image"]),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Text(
+                                          "${memberships[index]["title"]}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        Text(
+                                          "${memberships[index]["price"].toStringAsFixed(2)} TL",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
                       width: 10.0,
                     ),
                     Expanded(
-                      child: Container(
-                        height: 250.0,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: List.generate(
-                                expenses.length,
-                                (index) => GestureDetector(
-                                  onTap: () {
-                                    _displayTextInputDialog(context);
-                                    expenseType = expenses[index]["title"];
-                                    iconData = expenses[index]["iconData"];
-                                  },
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade100,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            Icon(
-                                              expenses[index]["iconData"],
-                                              size: 30.0,
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Text(
-                                              "${expenses[index]["title"]}",
-                                              style: TextStyle(
-                                                fontSize: 20.0,
-                                                fontWeight: FontWeight.w400,
+                      child: Material(
+                        elevation: 1.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Container(
+                          height: 250.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: List.generate(
+                                  expenses.length,
+                                  (index) => GestureDetector(
+                                    onTap: () {
+                                      _displayTextInputDialog(context);
+                                      expenseType = expenses[index]["title"];
+                                      iconData = expenses[index]["iconData"];
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              Icon(
+                                                expenses[index]["iconData"],
+                                                size: 30.0,
                                               ),
-                                            ),
-                                          ],
+                                              SizedBox(
+                                                width: 10.0,
+                                              ),
+                                              Text(
+                                                "${expenses[index]["title"]}",
+                                                style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -304,11 +328,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 10.0,
                 ),
-                Container(
-                  height: 250.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
+                Material(
+                  elevation: 1.0,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: 250.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
