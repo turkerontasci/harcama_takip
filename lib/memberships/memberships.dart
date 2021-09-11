@@ -33,8 +33,8 @@ List expenses = [
   },
   {
     "id": 3,
-    "title": "Mutfak",
-    "iconData": Icons.kitchen,
+    "title": "Market",
+    "iconData": Icons.shopping_cart,
   },
   {
     "id": 4,

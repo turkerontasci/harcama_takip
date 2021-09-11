@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harcama_takip/expenses/expenses.dart';
 import 'package:harcama_takip/memberships/memberships.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,6 +11,8 @@ class HomeScreen extends StatefulWidget {
 String odemeTitle;
 
 List<Expenses> expenseList = [];
+
+List<MonthlyExpenses> monthlyExpense = [];
 
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _textFieldController = TextEditingController();
@@ -49,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.pop(context);
                 price = double.parse(_textFieldController.text);
-                addItemToList();
+                addDailyExpenses();
               },
             ),
           ],
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   IconData iconData;
 
-  void addItemToList() {
+  void addDailyExpenses() {
     setState(() {
       expenseList.add(
         Expenses(
@@ -74,6 +75,35 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     });
+  }
+
+  void addMonthlyExpenses() {
+    setState(() {
+      monthlyExpense.add(
+        MonthlyExpenses(
+          type: expenseType,
+          totalPrice: totalCalculator(),
+        ),
+      );
+    });
+  }
+
+  void addMonthlySub() {
+    setState(() {
+
+    });
+  }
+
+  double totalCalculator() {
+    double totalPrice = 0.0;
+    if (expenseList.isEmpty) {
+      totalPrice = 0.0;
+    } else {
+      for (int i = 0; i < expenseList.length; i++) {
+        totalPrice += expenseList[i].price;
+      }
+    }
+    return totalPrice;
   }
 
   @override
@@ -86,44 +116,47 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Material(
+                if (expenseList.isEmpty) Container() else Material(
+                  elevation: 1,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(10.0),
-                  elevation: 1.0,
-                  child: (expenseList.isEmpty)
-                      ? Container()
-                      : Container(
-                          height: 250.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white,
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                        children: List.generate(
-                                            expenseList.length,
-                                            (index) => Padding(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                  children: List.generate(
+                                      expenseList.length,
+                                          (index) => Padding(
+                                            padding: const EdgeInsets.only(bottom: 10.0),
+                                            child: Material(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              elevation: 1.0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      10.0),
+                                                  color:
+                                                  Colors.grey.shade100,
+                                                ),
+                                                child: Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 10.0),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      color:
-                                                          Colors.grey.shade100,
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Row(
-                                                        children: <Widget>[
+                                                  const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                    children: <Widget>[
+                                                      Row(
+                                                        children: [
                                                           Icon(
                                                             expenseList[index]
                                                                 .iconData,
@@ -132,54 +165,71 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           SizedBox(width: 5.0),
                                                           Text(
                                                             "${expenseList[index].type}",
+                                                            style: TextStyle(
+                                                              fontSize: 13.0,
+                                                            ),
                                                           ),
-                                                          SizedBox(width: 5.0),
-                                                          Text(
-                                                            "${(expenseList[index].price).toStringAsFixed(2)} TL",
-                                                          )
                                                         ],
                                                       ),
-                                                    ),
+                                                      SizedBox(width: 5.0),
+                                                      Text(
+                                                        "${(expenseList[index].price).toStringAsFixed(2)} TL",
+                                                        style: TextStyle(
+                                                          fontSize: 13.0,
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-                                                ))),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                   ),
-                                ),
                               ),
-                              SizedBox(width: 10.0),
-                              Expanded(
-                                child: Container(
-                                  height: 250.0,
-                                  child: SfCircularChart(
-                                    legend: Legend(
-                                      isVisible: true,
-                                      overflowMode:
-                                          LegendItemOverflowMode.scroll,
-                                    ),
-                                    series: <CircularSeries>[
-                                      PieSeries<Expenses, String>(
-                                        dataSource: expenseList,
-                                        xValueMapper: (Expenses data, _) =>
-                                            data.type,
-                                        yValueMapper: (Expenses data, _) =>
-                                            data.price,
-                                        dataLabelSettings:
-                                            DataLabelSettings(isVisible: true),
-                                        enableTooltip: true,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
+                      ),
+                      SizedBox(width: 10.0),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  "Günlük Harcama:",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                                Text(
+                                  "${totalCalculator().toStringAsFixed(2)} TL",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
+                SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     Expanded(
                       child: Material(
                         elevation: 1.0,
@@ -324,20 +374,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Material(
-                  elevation: 1.0,
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    height: 250.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                    ),
-                  ),
                 ),
               ],
             ),

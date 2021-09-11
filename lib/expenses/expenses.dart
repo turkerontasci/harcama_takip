@@ -11,3 +11,14 @@ class Expenses {
     this.iconData,
   });
 }
+
+class MonthlyExpenses {
+
+  String type;
+  double totalPrice;
+
+  MonthlyExpenses({
+    this.type,
+    this.totalPrice
+  });
+}
