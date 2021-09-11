@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:harcama_takip/expenses/expenses.dart';
 import 'package:harcama_takip/memberships/memberships.dart';
@@ -60,10 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String expenseType;
-
   double price;
-
   IconData iconData;
+  Color expenseColor;
 
   void addDailyExpenses() {
     setState(() {
@@ -72,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           type: expenseType,
           price: price,
           iconData: iconData,
+          color: expenseColor,
         ),
       );
     });
@@ -89,9 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void addMonthlySub() {
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   double totalCalculator() {
@@ -116,199 +113,141 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                if (expenseList.isEmpty) Container() else Material(
-                  elevation: 1,
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                            height: 150.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                            ),
-                            child: SingleChildScrollView(
-                              child: Column(
+                if (expenseList.isEmpty)
+                  Material(
+                    elevation: 1,
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Container(
+                      height: 45.0,
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Harcama Girişi Yapmadınız",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Material(
+                    elevation: 1,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          flex: 4,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Container(
+                              height: 150.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white,
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
                                   children: List.generate(
-                                      expenseList.length,
-                                          (index) => Padding(
-                                            padding: const EdgeInsets.only(bottom: 10.0),
-                                            child: Material(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              elevation: 1.0,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      10.0),
-                                                  color:
-                                                  Colors.grey.shade100,
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                  const EdgeInsets.all(
-                                                      10.0),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            expenseList[index]
-                                                                .iconData,
-                                                            size: 15.0,
-                                                          ),
-                                                          SizedBox(width: 5.0),
-                                                          Text(
-                                                            "${expenseList[index].type}",
-                                                            style: TextStyle(
-                                                              fontSize: 13.0,
-                                                            ),
-                                                          ),
-                                                        ],
+                                    expenseList.length,
+                                    (index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10.0),
+                                      child: Material(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        elevation: 1.0,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            color: expenseList[index].color,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      expenseList[index]
+                                                          .iconData,
+                                                      size: 15.0,
+                                                    ),
+                                                    SizedBox(width: 5.0),
+                                                    Text(
+                                                      "${expenseList[index].type}",
+                                                      style: TextStyle(
+                                                        fontSize: 13.0,
                                                       ),
-                                                      SizedBox(width: 5.0),
-                                                      Text(
-                                                        "${(expenseList[index].price).toStringAsFixed(2)} TL",
-                                                        style: TextStyle(
-                                                          fontSize: 13.0,
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
+                                                SizedBox(width: 5.0),
+                                                Text(
+                                                  "${(expenseList[index].price).toStringAsFixed(2)} TL",
+                                                  style: TextStyle(
+                                                    fontSize: 13.0,
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 10.0),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  "Günlük Harcama:",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15.0,
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10.0, left: 10.0, right: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(height: 5.0),
+                                  Text(
+                                    "Toplam Harcama",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13.0,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 10.0),
-                                Text(
-                                  "${totalCalculator().toStringAsFixed(2)} TL",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20.0,
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    "${totalCalculator().toStringAsFixed(2)} TL",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20.0,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 10.0),
-
-                              ],
+                                  SizedBox(height: 10.0),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
                 SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                      child: Material(
-                        elevation: 1.0,
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Container(
-                          height: 250.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: <Widget>[
-                                CarouselSlider(
-                                  options: CarouselOptions(
-                                    height: 230.0,
-                                    aspectRatio: 2.0,
-                                    viewportFraction: 1,
-                                    initialPage: 0,
-                                    enableInfiniteScroll: true,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval: Duration(seconds: 3),
-                                    autoPlayAnimationDuration:
-                                        Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: false,
-                                    scrollDirection: Axis.horizontal,
-                                  ),
-                                  items: List.generate(
-                                    memberships.length,
-                                    (index) => Column(
-                                      children: <Widget>[
-                                        Container(
-                                          height: 150.0,
-                                          width: 150.0,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                  memberships[index]["image"]),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Text(
-                                          "${memberships[index]["title"]}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18.0,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10.0,
-                                        ),
-                                        Text(
-                                          "${memberships[index]["price"].toStringAsFixed(2)} TL",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
                     Expanded(
                       child: Material(
                         elevation: 1.0,
@@ -330,13 +269,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       _displayTextInputDialog(context);
                                       expenseType = expenses[index]["title"];
                                       iconData = expenses[index]["iconData"];
+                                      expenseColor = expenses[index]["color"];
                                     },
                                     child: Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 10.0),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
+                                          color: expenses[index]["color"],
                                           borderRadius:
                                               BorderRadius.circular(10.0),
                                         ),
@@ -344,21 +284,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
-                                              Icon(
-                                                expenses[index]["iconData"],
-                                                size: 30.0,
-                                              ),
-                                              SizedBox(
-                                                width: 10.0,
-                                              ),
-                                              Text(
-                                                "${expenses[index]["title"]}",
-                                                style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
+                                              Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Icon(
+                                                    expenses[index]["iconData"],
+                                                    size: 30.0,
+                                                  ),
+                                                  SizedBox(width: 10.0),
+                                                  Text(
+                                                    "${expenses[index]["title"]}",
+                                                    style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),

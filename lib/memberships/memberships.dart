@@ -25,38 +25,44 @@ List expenses = [
     "id": 1,
     "title": "Yemek",
     "iconData": Icons.fastfood,
+    "color": Color(0xCDF8B96D),
   },
   {
     "id": 2,
     "title": "Fatura",
     "iconData": Icons.payments,
+    "color": Color(0x90FF9393),
   },
   {
     "id": 3,
     "title": "Market",
     "iconData": Icons.shopping_cart,
+    "color": Color(0x909090FF),
   },
   {
     "id": 4,
     "title": "Eğlence",
     "iconData": Icons.movie_filter_outlined,
+    "color": Color(0x907DE4FF),
   },
   {
     "id": 5,
     "title": "Giyim",
     "iconData": Icons.dry_cleaning,
+    "color": Color(0x90FC59BA),
   },
   {
     "id": 6,
     "title": "Elektronik",
     "iconData": Icons.laptop_windows,
+    "color": Color(0x909FF3A0),
   },
   {
     "id": 7,
     "title": "Ulaşım",
     "iconData": Icons.train,
+    "color": Color(0xA6FF8C70),
   }
-
 ];
 
 List memberships = [
