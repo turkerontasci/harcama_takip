@@ -14,6 +14,7 @@ List<Expenses> expenseList = [];
 List<MonthlyExpenses> monthlyExpense = [];
 
 class _HomeScreenState extends State<HomeScreen> {
+
   TextEditingController _textFieldController = TextEditingController();
 
   Future<void> _displayTextInputDialog(BuildContext context) async {
@@ -59,9 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String expenseType;
+  String monthlyExpenseType;
   double price;
   IconData iconData;
   Color expenseColor;
+  double limit = 250.0;
 
   void addDailyExpenses() {
     setState(() {
@@ -80,15 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       monthlyExpense.add(
         MonthlyExpenses(
-          type: expenseType,
+          type: monthlyExpenseType,
           totalPrice: totalCalculator(),
         ),
       );
     });
-  }
-
-  void addMonthlySub() {
-    setState(() {});
   }
 
   double totalCalculator() {
@@ -107,51 +106,57 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                if (expenseList.isEmpty)
-                  Material(
-                    elevation: 1,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Container(
-                      height: 45.0,
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Harcama Girişi Yapmadınız",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                          fontSize: 15.0,
-                        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              if (expenseList.isEmpty)
+                Material(
+                  elevation: 1,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Container(
+                    height: 45.0,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Harcama Girişi Yapmadınız",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontSize: 15.0,
                       ),
                     ),
-                  )
-                else
-                  Material(
-                    elevation: 1,
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 4,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              height: 150.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                              ),
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: List.generate(
-                                    expenseList.length,
-                                    (index) => Padding(
+                  ),
+                )
+              else
+                Material(
+                  elevation: 1,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 4,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: List.generate(
+                                  expenseList.length,
+                                  (index) => GestureDetector(
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        expenseList.removeAt(index);
+                                      });
+                                    },
+                                    child: Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 10.0),
                                       child: Material(
@@ -206,25 +211,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          flex: 3,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10.0, left: 10.0, right: 10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                              ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 10.0, right: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: totalCalculator() > limit ? Colors.redAccent : Colors.green,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0, right: 10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(height: 5.0),
                                   Text(
                                     "Toplam Harcama",
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13.0,
+                                      color: totalCalculator() > limit ? Colors.black : Colors.white,
                                     ),
                                   ),
                                   SizedBox(height: 10.0),
@@ -233,6 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 20.0,
+                                      color: totalCalculator() > limit ? Colors.black : Colors.white,
                                     ),
                                   ),
                                   SizedBox(height: 10.0),
@@ -241,72 +251,72 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Expanded(
-                      child: Material(
-                        elevation: 1.0,
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Container(
-                          height: 250.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: List.generate(
-                                  expenses.length,
-                                  (index) => GestureDetector(
-                                    onTap: () {
-                                      _displayTextInputDialog(context);
-                                      expenseType = expenses[index]["title"];
-                                      iconData = expenses[index]["iconData"];
-                                      expenseColor = expenses[index]["color"];
-                                    },
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10.0),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: expenses[index]["color"],
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Icon(
-                                                    expenses[index]["iconData"],
-                                                    size: 30.0,
+                ),
+              SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: Material(
+                      elevation: 1.0,
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+                      child: Container(
+                        height: 250.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: List.generate(
+                                expenses.length,
+                                (index) => GestureDetector(
+                                  onTap: () {
+                                    _displayTextInputDialog(context);
+                                    expenseType = expenses[index]["title"];
+                                    iconData = expenses[index]["iconData"];
+                                    expenseColor = expenses[index]["color"];
+                                  },
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: expenses[index]["color"],
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Icon(
+                                                  expenses[index]["iconData"],
+                                                  size: 30.0,
+                                                ),
+                                                SizedBox(width: 10.0),
+                                                Text(
+                                                  "${expenses[index]["title"]}",
+                                                  style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.w500,
                                                   ),
-                                                  SizedBox(width: 10.0),
-                                                  Text(
-                                                    "${expenses[index]["title"]}",
-                                                    style: TextStyle(
-                                                      fontSize: 20.0,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -318,10 +328,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
