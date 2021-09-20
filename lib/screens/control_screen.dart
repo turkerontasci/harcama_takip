@@ -65,25 +65,46 @@ class _ControlScreenState extends State<ControlScreen> {
                         ),
                       ],
                     ),
-                    Text(
-                      "Maaş : ${wage.toStringAsFixed(2)} TL",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "Maaştan Kalan",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    Text(
-                      "${(wage - totalCalculator()).toStringAsFixed(2)} TL",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Material(
+                        elevation: 1,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Maaş : ${wage.toStringAsFixed(2)} TL",
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      "Kalan : ",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${(wage - totalCalculator()).toStringAsFixed(2)} TL",
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
