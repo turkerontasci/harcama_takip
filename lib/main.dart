@@ -3,6 +3,7 @@ import 'package:harcama_takip/screens/control_screen.dart';
 import 'package:harcama_takip/screens/home_screen.dart';
 import 'package:harcama_takip/screens/profile_screen.dart';
 
+
 void main() {
   runApp(MyApp());
 }

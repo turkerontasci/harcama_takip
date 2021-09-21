@@ -124,7 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 12.0),
-                Icon(Icons.keyboard_arrow_up),
+                Icon(
+                    Icons.keyboard_arrow_up,
+                  color: Colors.grey.shade700,
+                ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
