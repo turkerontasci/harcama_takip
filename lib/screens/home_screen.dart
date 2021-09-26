@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:harcama_takip/expenses/expenses.dart';
 import 'package:harcama_takip/memberships/memberships.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,14 +15,6 @@ List<Expenses> expenseList = [];
 List<MonthlyExpenses> monthlyExpense = [];
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  TooltipBehavior _tooltipBehavior;
-
-  @override
-  void initState() {
-    _tooltipBehavior = TooltipBehavior(enable: true);
-    super.initState();
-  }
 
   TextEditingController _textFieldController = TextEditingController();
 
@@ -135,53 +126,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: List.generate(
-                          expenses.length,
-                              (index) => GestureDetector(
-                            onTap: () {
-                              _displayTextInputDialog(context);
-                              expenseType = expenses[index]["title"];
-                              iconData = expenses[index]["iconData"];
-                              expenseColor = expenses[index]["color"];
-                            },
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: expenses[index]["color"],
-                                  borderRadius:
-                                  BorderRadius.circular(10.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Icon(
-                                            expenses[index]["iconData"],
-                                            size: 30.0,
+                    child: Column(
+                      children: List.generate(
+                        expenses.length,
+                            (index) => GestureDetector(
+                          onTap: () {
+                            _displayTextInputDialog(context);
+                            expenseType = expenses[index]["title"];
+                            iconData = expenses[index]["iconData"];
+                            expenseColor = expenses[index]["color"];
+                          },
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(bottom: 10.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: expenses[index]["color"],
+                                borderRadius:
+                                BorderRadius.circular(10.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          expenses[index]["iconData"],
+                                          size: 30.0,
+                                        ),
+                                        SizedBox(width: 10.0),
+                                        Text(
+                                          "${expenses[index]["title"]}",
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight:
+                                            FontWeight.w500,
                                           ),
-                                          SizedBox(width: 10.0),
-                                          Text(
-                                            "${expenses[index]["title"]}",
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight:
-                                              FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -221,29 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
-                      SfCircularChart(
-                        title: ChartTitle(
-                          text: "Günlük Harcama Tablosu",
-                          textStyle: TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        tooltipBehavior: _tooltipBehavior,
-                        series: <CircularSeries>[
-                          RadialBarSeries<Expenses, String>(
-                            dataSource: expenseList,
-                            xValueMapper: (Expenses data, _) =>
-                            data.type,
-                            yValueMapper: (Expenses data, _) =>
-                            data.price,
-                            dataLabelSettings:
-                            DataLabelSettings(isVisible: true),
-                            enableTooltip: true,
-                            maximumValue: 300,
-                            cornerStyle: CornerStyle.bothCurve,
-                          ),
-                        ],
-                      ),
                       Material(
                         elevation: 1,
                         color: Colors.white,
@@ -330,8 +296,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               flex: 3,
                               child: Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 10.0, left: 10.0, right: 10.0),
+                                    left: 10.0, right: 10.0),
                                 child: Container(
+                                  height: 150.0,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10.0),
                                     color: totalCalculator() > limit ? Colors.redAccent : Colors.green,
@@ -340,10 +307,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: const EdgeInsets.only(
                                         top: 10.0, left: 10.0, right: 10.0),
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          "Toplam Harcama",
+                                          "Günlük Harcama",
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 13.0,
