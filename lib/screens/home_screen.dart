@@ -107,180 +107,234 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SlidingUpPanel(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
-          minHeight: 45.0,
-          maxHeight: 422.0,
-          panel: Container(
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 12.0),
-                Icon(
-                    Icons.keyboard_arrow_up,
-                  color: Colors.grey.shade700,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
-                    color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            if (expenseList.isEmpty)
+              Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                    child: Material(
+                      elevation: 1,
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Container(
+                        height: 45.0,
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Harcama Türünüzü Seçiniz",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: List.generate(
-                        expenses.length,
-                            (index) => GestureDetector(
-                          onTap: () {
-                            _displayTextInputDialog(context);
-                            expenseType = expenses[index]["title"];
-                            iconData = expenses[index]["iconData"];
-                            expenseColor = expenses[index]["color"];
-                          },
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.only(bottom: 10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: expenses[index]["color"],
-                                borderRadius:
-                                BorderRadius.circular(10.0),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.center,
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(expenses.length, (index) => Padding(
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              _displayTextInputDialog(context);
+                              expenseType = expenses[index]["title"];
+                              iconData = expenses[index]["iconData"];
+                              expenseColor = expenses[index]["color"];
+                            },
+                            child: Material(
+                              borderRadius: BorderRadius.circular(10.0),
+                              elevation: 1,
+                              child: Container(
+                                height: 75.0,
+                                width: 75.0,
+                                decoration: BoxDecoration(
+                                  color: expenses[index]["color"],
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Row(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          expenses[index]["iconData"],
-                                          size: 30.0,
-                                        ),
-                                        SizedBox(width: 10.0),
-                                        Text(
-                                          "${expenses[index]["title"]}",
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight:
-                                            FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
+                                    Icon(
+                                      expenses[index]["iconData"],
+                                      size: 20.0,
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      expenses[index]["title"],
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        )),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          body: Column(
-            children: <Widget>[
-              if (expenseList.isEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Material(
-                    elevation: 1,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Container(
-                      height: 45.0,
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Harcama Girişi Yapmadınız",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                          fontSize: 15.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              else
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
+                ],
+              )
+            else
+              Column(
+                children: <Widget>[
+                  Column(
                     children: <Widget>[
-                      Material(
-                        elevation: 1,
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Row(
-                          children: <Widget>[
-                            Expanded(
-                              flex: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  height: 150.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: Colors.white,
-                                  ),
-                                  child: SingleChildScrollView(
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                        child: Material(
+                          elevation: 1,
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Container(
+                            height: 45.0,
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Harcama Türünüzü Seçiniz",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(expenses.length, (index) => Padding(
+                              padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _displayTextInputDialog(context);
+                                  expenseType = expenses[index]["title"];
+                                  iconData = expenses[index]["iconData"];
+                                  expenseColor = expenses[index]["color"];
+                                },
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  elevation: 1,
+                                  child: Container(
+                                    height: 75.0,
+                                    width: 75.0,
+                                    decoration: BoxDecoration(
+                                      color: expenses[index]["color"],
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
                                     child: Column(
-                                      children: List.generate(
-                                        expenseList.length,
-                                            (index) => GestureDetector(
-                                          onDoubleTap: () {
-                                            setState(() {
-                                              expenseList.removeAt(index);
-                                            });
-                                          },
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.only(bottom: 10.0),
-                                            child: Material(
-                                              borderRadius:
-                                              BorderRadius.circular(10.0),
-                                              elevation: 1.0,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                                  color: expenseList[index].color,
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: <Widget>[
-                                                      Row(
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            expenseList[index]
-                                                                .iconData,
-                                                            size: 15.0,
-                                                          ),
-                                                          SizedBox(width: 5.0),
-                                                          Text(
-                                                            "${expenseList[index].type}",
-                                                            style: TextStyle(
-                                                              fontSize: 13.0,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(width: 5.0),
-                                                      Text(
-                                                        "${(expenseList[index].price).toStringAsFixed(2)} TL",
-                                                        style: TextStyle(
-                                                          fontSize: 13.0,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          expenses[index]["iconData"],
+                                          size: 20.0,
+                                        ),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text(
+                                          expenses[index]["title"],
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Material(
+                      elevation: 1,
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 4,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: Colors.white,
+                                ),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: List.generate(
+                                      expenseList.length,
+                                          (index) => GestureDetector(
+                                        onDoubleTap: () {
+                                          setState(() {
+                                            expenseList.removeAt(index);
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.only(bottom: 10.0),
+                                          child: Material(
+                                            borderRadius:
+                                            BorderRadius.circular(10.0),
+                                            elevation: 1.0,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(10.0),
+                                                color: expenseList[index].color,
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(10.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: <Widget>[
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Icon(
+                                                          expenseList[index]
+                                                              .iconData,
+                                                          size: 15.0,
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
+                                                        SizedBox(width: 5.0),
+                                                        Text(
+                                                          "${expenseList[index].type}",
+                                                          style: TextStyle(
+                                                            fontSize: 13.0,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(width: 5.0),
+                                                    Text(
+                                                      "${(expenseList[index].price).toStringAsFixed(2)} TL",
+                                                      style: TextStyle(
+                                                        fontSize: 13.0,
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
                                             ),
@@ -292,56 +346,56 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10.0),
-                                child: Container(
-                                  height: 150.0,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: totalCalculator() > limit ? Colors.redAccent : Colors.green,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 10.0, right: 10.0),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "Günlük Harcama",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 13.0,
-                                            color: totalCalculator() > limit ? Colors.black : Colors.white,
-                                          ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
+                              child: Container(
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  color: totalCalculator() > limit ? Colors.redAccent : Colors.green,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0, right: 10.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "Günlük Harcama",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 13.0,
+                                          color: totalCalculator() > limit ? Colors.black : Colors.white,
                                         ),
-                                        SizedBox(height: 10.0),
-                                        Text(
-                                          "${totalCalculator().toStringAsFixed(2)} TL",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 20.0,
-                                            color: totalCalculator() > limit ? Colors.black : Colors.white,
-                                          ),
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        "${totalCalculator().toStringAsFixed(2)} TL",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20.0,
+                                          color: totalCalculator() > limit ? Colors.black : Colors.white,
                                         ),
-                                        SizedBox(height: 10.0),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: 10.0),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-            ],
-          ),
+                ],
+              ),
+          ],
         ),
       ),
     );
